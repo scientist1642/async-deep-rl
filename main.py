@@ -49,7 +49,8 @@ def main(args):
 
     # chage summary log directory to current dir
     cur_path = os.path.dirname(os.path.realpath(__file__))
-    args.summ_base_dir = (cur_path+'/summary_logs/{}/{}').format(args.game, time.strftime('%m.%d/%H.%M'))
+    args.summ_base_dir = (cur_path+'/summary_logs/{}/{}({})').format(args.game, 
+            time.strftime('%d.%m-%H.%M'), args.short_description)
     logger.info('logging summaries to {}'.format(args.summ_base_dir))
 
     algorithms = {
@@ -149,6 +150,7 @@ if __name__ == '__main__':
     parser.add_argument('--frame_skip', default=[4], type=int, nargs='+', help='number of frames to repeat action', dest='frame_skip')
     parser.add_argument('--test', action='store_false', help='if not set train agents in parallel, otherwise follow optimal policy with single agent', dest='is_train')
     parser.add_argument('--restore_checkpoint', action='store_true', help='resume training from last checkpoint', dest='restore_checkpoint')
+    parser.add_argument('--short_description', default='', help='Short description of the run parrameters, (currently used in tensorboard)', dest='short_description')
 
     args = parser.parse_args()
     if (args.env=='ALE' and args.rom_path is None):
