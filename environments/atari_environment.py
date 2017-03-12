@@ -66,9 +66,9 @@ class AtariEnvironment(object):
         self.agent_history_length = agent_history_length
         self.single_life_episodes = single_life_episodes
 
-        self.gym_actions = range(self.env.action_space.n)
+        self.gym_actions = list(range(self.env.action_space.n))
         if self.env.spec.id in ['Pong-v0', 'Breakout-v0']:
-            print 'Doing workaround for pong or breakout'
+            print('Doing workaround for pong or breakout')
             # Gym returns 6 possible actions for breakout and pong.
             # Only three are used, the rest are no-ops. This just lets us
             # pick from a simplified "LEFT", "RIGHT", "NOOP" action space.
@@ -81,8 +81,8 @@ class AtariEnvironment(object):
         self.visualize = visualize
         
     def get_lives(self):
-        if hasattr(self.env.env, 'ale'):
-            return self.env.env.ale.lives()
+        if hasattr(self.env, 'ale'):
+            return self.env.ale.lives()
         else:
             return 0
 

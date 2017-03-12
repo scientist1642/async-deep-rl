@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-import layers
+from . import layers
 import tensorflow as tf
-from network import Network
+from .network import Network
 
 
 class DuelingNetwork(Network):
@@ -93,6 +93,6 @@ class DuelingNetwork(Network):
             
             # Ops to sync net with shared memory vars
             self.sync_with_shared_memory = []
-            for i in xrange(len(self.params)):
+            for i in range(len(self.params)):
                 self.sync_with_shared_memory.append(
                     self.params[i].assign(self.params_ph[i]))

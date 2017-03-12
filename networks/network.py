@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import tensorflow as tf
 import numpy as np
-import layers
+from . import layers
 
 
 class Network(object):

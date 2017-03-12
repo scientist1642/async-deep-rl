@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
-import layers
+from . import layers
 import numpy as np
 import tensorflow as tf
-from network import Network
-from custom_lstm import CustomBasicLSTMCell
+from .network import Network
+from .custom_lstm import CustomBasicLSTMCell
 
 
 class PolicyVNetwork(Network):
@@ -132,7 +132,7 @@ class PolicyVNetwork(Network):
             
             # Ops to sync net with shared memory vars
             self.sync_with_shared_memory = []
-            for i in xrange(len(self.params)):
+            for i in range(len(self.params)):
                 self.sync_with_shared_memory.append(
                     self.params[i].assign(self.params_ph[i]))
 
@@ -190,7 +190,7 @@ class PolicyRepeatNetwork(Network):
             # Compute Poisson x Discrete Gaussian
             self.t = tf.placeholder(tf.float32, num_actions)
             self.l = tf.placeholder(tf.float32, num_actions)
-            k = np.array(range(10))
+            k = np.array(list(range(10)))
             t_hat = tf.log(1+tf.exp(self.t))
             l_hat = tf.log(1+tf.exp(self.l))
             self.action_repeat_probs = tf.exp(-(k-l_hat)**2/(2*t_hat) - l_hat - tf.lgamma(k+1)) * l_hat**k
@@ -276,7 +276,7 @@ class PolicyRepeatNetwork(Network):
             
             # Ops to sync net with shared memory vars
             self.sync_with_shared_memory = []
-            for i in xrange(len(self.params)):
+            for i in range(len(self.params)):
                 self.sync_with_shared_memory.append(
                     self.params[i].assign(self.params_ph[i]))
 
@@ -454,7 +454,7 @@ class SequencePolicyVNetwork(Network):
                 ]
 
 
-            print 'Decoder out: s,l,a=', self.decoder_state.get_shape(), self.logits.get_shape(), self.actions.get_shape()
+            print('Decoder out: s,l,a=', self.decoder_state.get_shape(), self.logits.get_shape(), self.actions.get_shape())
 
 
             #mask softmax by allowed actions
@@ -470,7 +470,7 @@ class SequencePolicyVNetwork(Network):
             self.output_layer_entropy = - tf.reduce_mean(tf.stop_gradient(1 + log_sequence_probs) * log_sequence_probs)
             self.entropy = - tf.reduce_mean(log_sequence_probs)
 
-            print 'sp, lsp:', sequence_probs.get_shape(), log_sequence_probs.get_shape()
+            print('sp, lsp:', sequence_probs.get_shape(), log_sequence_probs.get_shape())
 
 
 
@@ -536,7 +536,7 @@ class SequencePolicyVNetwork(Network):
             
             # Ops to sync net with shared memory vars
             self.sync_with_shared_memory = []
-            for i in xrange(len(self.params)):
+            for i in range(len(self.params)):
                 self.sync_with_shared_memory.append(
                     self.params[i].assign(self.params_ph[i]))
 

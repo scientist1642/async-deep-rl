@@ -67,7 +67,7 @@ class SharedVars(object):
             
     def malloc_contiguous(self, size, initial_val=None):
         if initial_val is None:
-            return RawArray(ctypes.c_float, size)
+            return RawArray(ctypes.c_float, int(size))
         else:
             return RawArray(ctypes.c_float, initial_val)
 
