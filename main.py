@@ -45,8 +45,11 @@ def main(args):
         input_shape = atari_environment.get_input_shape(args.game)
     else:
         num_actions = get_num_actions(args.rom_path, args.game)
-    
-    args.summ_base_dir = '/tmp/summary_logs/{}/{}'.format(args.game, time.strftime('%m.%d/%H.%M'))
+   
+
+    # chage summary log directory to current dir
+    cur_path = os.path.dirname(os.path.realpath(__file__))
+    args.summ_base_dir = (cur_path+'/summary_logs/{}/{}').format(args.game, time.strftime('%m.%d/%H.%M'))
     logger.info('logging summaries to {}'.format(args.summ_base_dir))
 
     algorithms = {
